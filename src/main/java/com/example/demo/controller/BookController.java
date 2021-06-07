@@ -1,41 +1,24 @@
 package com.example.demo.controller;
 
+import com.example.demo.model.Book;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @Controller
 public class BookController {
 
-    private List<Book> books = new ArrayList<>();
+    private final Book book = new Book();
 
-    public BookController() {
-        Book b = new Book();
-        b.title = "Harry Potter and The Sorcerer Stone";
-        b.author = "JK.Rowling";
-        b.year = 2000;
-
-        for (int i = 0; i < 10; i++) {
-            books.add(b);
-        }
-    }
-
-    @ResponseBody
     @RequestMapping(value = "/book", method = {RequestMethod.GET})
-    public String books() {
-        return "Good";
+    public String books(Model model) {
+        book.setTitle("Harry Potter");
+        book.setAuthor("J.K.Rowling");
+        book.setYear(2000);
+        model.addAttribute(book);
+        return "hello";
     }
 
 }
 
-class Book {
-    public String title;
-
-    public String author;
-
-    public Integer year;
-}
